@@ -1,2 +1,2 @@
-# raspberry-supplicant-802-1x
-App to turn a Raspberry Pi into a supplicant for IEEE 802.1x protocol. 
+# Raspberry Pi Supplicant for 802.1x (2024)
+Work in progress...
