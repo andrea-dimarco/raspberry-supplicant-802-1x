@@ -1,4 +1,4 @@
-# Raspberry Pi Supplicant for 802.1x (2024)
+# Raspberry Pi Supplicant for 802.1x (2024) (WIP)
 
 Please follow the instruction below.
 
