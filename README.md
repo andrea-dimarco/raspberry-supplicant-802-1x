@@ -7,7 +7,7 @@ Please follow the instruction below.
 Open a **terminal** and execute:
 
 ```
-sh setup.sh;
+sh setup.sh
 ```
 
 Click **Choose device** and select your Raspberry Pi model from the list.
@@ -26,7 +26,7 @@ Click on **WRITE** to install the OS.
 
 ## 2. SETUP
 
-# 2.1 Config
+### 2.1 Config
 Connect the Raspberry Pi to a monitor and on the console type:
 
 ```
@@ -47,7 +47,7 @@ Once you set the country, you can start raspi-config again to set up your Wi-Fi 
 - Finish.
 
 
-# 2.2 Enable SSH
+### 2.2 Enable SSH
 
 To enable SSH by default use the following commands on the console:
 
@@ -57,7 +57,7 @@ sudo update-rc.d ssh enable
 ```
 
 
-# 2.3 Enable Wi-Fi interface
+### 2.3 Enable Wi-Fi interface
 
 Use:
 
