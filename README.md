@@ -114,7 +114,7 @@ eapol_version=2
 ap_scan=0
 ```
 
-### 3.2. Authentication Info
+#### 3.1.1. Authentication Info
 
 Add your personal information in the file:
 
@@ -134,10 +134,54 @@ network={
 To test the authentication process, we can call WPA-Supplicant directly with our new configuration file.
 For example, in case of a wired network, execute the following command:
 
-
 ```
 sudo wpa_supplicant -c /etc/wpa_supplicant.conf -D wired -i eth0
 ```
+
+
+### 3.2. Change Default Behaviour
+
+If WPA-Supplicant can authenticate our computer to the network, we can add it to the global network configuration. By doing this WPA-Supplicant is automatically run when we boot up the computer or restart its network.
+
+Open the network interface configuration file:
+
+```
+sudo gedit /etc/network/interfaces
+```
+
+and
+
+```
+# The loopback interface, this is the default configuration:
+auto lo
+iface lo inet loopback
+
+# The first network interface.
+# In this case we want to receive an IP-address through DHCP:
+auto eth0
+iface eth0 inet dhcp
+
+# In this case we have a wired network:
+wpa-driver wired
+
+# Tell the system we want to use WPA-Supplicant with our configuration file:
+wpa-conf /etc/wpa_supplicant.conf
+```
+
+To test our new configuration, we stop the network on our system before saving the above configuration file:
+
+```
+sudo /etc/init.d/networking stop
+```
+
+After saving this file, we should be able to start the network with 802.1x authentication enabled:
+
+```
+sudo /etc/init.d/networking start
+```
+
+For most cases, this is all that is required to automatically authenticate our computer to the network using the IEEE 802.1x protocol. 
+
 
 ## 4. MAINTENANCE
 
