@@ -26,7 +26,7 @@ Click on **WRITE** to install the OS.
 
 ## 2. SETUP
 
-### 2.1 Config
+### 2.1. Config
 Connect the Raspberry Pi to a monitor and on the console type:
 
 ```
@@ -47,7 +47,7 @@ Once you set the country, you can start raspi-config again to set up your Wi-Fi 
 - Finish.
 
 
-### 2.2 Enable SSH
+### 2.2. Enable SSH
 
 To enable SSH by default use the following commands on the console:
 
@@ -57,7 +57,7 @@ sudo update-rc.d ssh enable
 ```
 
 
-### 2.3 Enable Wi-Fi interface
+### 2.3. Enable Wi-Fi interface
 
 Use:
 
@@ -79,7 +79,67 @@ sudo nmcli con modify hotspot 802-11-wireless.mode ap 802-11-wireless.band bg ip
 ```
 
 
-## 3 MAINTENANCE
+## 3. 802-1X Credentials
+
+To configure our computer for using WPA-Supplicant, two configuration files need to be edited.
+
+
+### 3.1. Supplicant Config file
+
+First, create a new text file in `/etc` with your favourite editor or, if you are logged in to a graphical environment, by typing in a terminal:
+
+```
+sudo gedit /etc/wpa_supplicant.conf
+```
+
+Add this configuration in the file:
+
+```
+# Where is the control interface located? This is the default path:
+ctrl_interface=/var/run/wpa_supplicant
+
+# Who can use the WPA frontend? Replace "0" with a group name if you
+#   want other users besides root to control it.
+# There should be no need to chance this value for a basic configuration:
+ctrl_interface_group=0
+
+# IEEE 802.1X works with EAPOL version 2, but the version is defaults 
+#   to 1 because of compatibility problems with a number of wireless
+#   access points. So we explicitly set it to version 2:
+eapol_version=2
+
+# When configuring WPA-Supplicant for use on a wired network, we don’t need to
+#   scan for wireless access points. See the wpa-supplicant documentation if
+#   you are authenticating through 802.1x on a wireless network:
+ap_scan=0
+```
+
+### 3.2. Authentication Info
+
+Add your personal information in the file:
+
+```
+network={
+ key_mgmt=IEEE8021X
+ eap=PEAP
+ identity="USERNAME"
+ anonymous_identity="USERNAME"
+ password="PASS"
+ phase1="auth=MD5"
+ phase2="auth=CHAP password=PASS"
+ eapol_flags=0
+}
+```
+
+To test the authentication process, we can call WPA-Supplicant directly with our new configuration file.
+For example, in case of a wired network, execute the following command:
+
+
+```
+sudo wpa_supplicant -c /etc/wpa_supplicant.conf -D wired -i eth0
+```
+
+## 4. MAINTENANCE
 
 To edit the network's settings use:
 
