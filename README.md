@@ -89,7 +89,7 @@ To configure our computer for using WPA-Supplicant, two configuration files need
 First, create a new text file in `/etc` with your favourite editor or, if you are logged in to a graphical environment, by typing in a terminal:
 
 ```
-sudo gedit /etc/wpa_supplicant.conf
+sudo nano /etc/wpa_supplicant.conf
 ```
 
 Add this configuration in the file:
@@ -121,15 +121,18 @@ Add your personal information in the file:
 ```
 network={
  key_mgmt=IEEE8021X
- eap=PEAP
+ eap=TTLS MD5
  identity="USERNAME"
  anonymous_identity="USERNAME"
  password="PASS"
  phase1="auth=MD5"
- phase2="auth=CHAP password=PASS"
+ phase2="auth=PAP password=PASS"
  eapol_flags=0
 }
 ```
+
+
+### 3.2. Test Authentication
 
 To test the authentication process, we can call WPA-Supplicant directly with our new configuration file.
 For example, in case of a wired network, execute the following command:
@@ -139,14 +142,14 @@ sudo wpa_supplicant -c /etc/wpa_supplicant.conf -D wired -i eth0
 ```
 
 
-### 3.2. Change Default Behaviour
+### 3.3. Change Default Behaviour
 
 If WPA-Supplicant can authenticate our computer to the network, we can add it to the global network configuration. By doing this WPA-Supplicant is automatically run when we boot up the computer or restart its network.
 
 Open the network interface configuration file:
 
 ```
-sudo gedit /etc/network/interfaces
+sudo nano /etc/network/interfaces
 ```
 
 and
